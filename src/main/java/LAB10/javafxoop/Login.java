@@ -88,7 +88,7 @@ public class Login extends Application {
                 actiontarget.setFill(Color.BLACK);
                 userTextField.setText("");
                 pwBox.setText("");
-                actiontarget.setText("Cancel and bruh details");
+                actiontarget.setText("Cancel and clear details");
             }
         });
         Scene scene = new Scene(grid, 300, 275);
