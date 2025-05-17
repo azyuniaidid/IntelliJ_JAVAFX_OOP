@@ -21,6 +21,7 @@ import javafx.stage.Stage;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+
 public class Exercise1 extends Application {
     public static void main(String[] args) {
         launch(args);
@@ -37,11 +38,12 @@ public class Exercise1 extends Application {
         grid.setPadding(new Insets(25, 25, 25, 25));
 
         // Load an image (from URL or local resource)
-        Image image = new Image("https://kulliyyah.iium.edu.my/kict/wp- content/uploads/sites/3/2024/01/iium-kict-logo-simple.png");
+        Image image = new Image("https://kulliyyah.iium.edu.my/kict/wp-content/uploads/sites/3/2024/01/iium-kict-logo-simple.png");
         ImageView imageView = new ImageView(image);
         imageView.setFitWidth(300);
         imageView.setPreserveRatio(true);
 
+        grid.add(imageView, 0, 0, 2, 1); // This places the image on the grid
 
         Label userName = new Label("User name: ");
 
@@ -67,7 +69,7 @@ public class Exercise1 extends Application {
         HBox hbBtn2 = new HBox(10);
         hbBtn2.setAlignment(Pos.BOTTOM_RIGHT);
         hbBtn2.getChildren().add(btn2);
-        grid.add(hbBtn2, 1, 4);
+        grid.add(hbBtn2, 2, 4);
 
         final Text actiontarget = new Text();
         grid.add(actiontarget, 1, 6);
@@ -93,7 +95,7 @@ public class Exercise1 extends Application {
                 actiontarget.setText("Cancel and clear details");
             }
         });
-        Scene scene = new Scene(grid,300, 275);
+        Scene scene = new Scene(grid,500, 400);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
