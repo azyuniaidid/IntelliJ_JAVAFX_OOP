@@ -1,15 +1,14 @@
 package LAB11.javafxoop;
 
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -19,8 +18,6 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 
 public class EventHandling extends Application{
 
@@ -70,36 +67,87 @@ public class EventHandling extends Application{
         ListView<String> features = new ListView<>();
         features.getItems().addAll("Feature-1", "Feature-2", "Feature-3");
         VBox featureOptions = new VBox(features);
-        grid.add(featureOptions, 0, 12, 15, 8);
+        grid.add(featureOptions, 0, 12, 12, 6);
 
         Label date = new Label("Date option:");
-        grid.add(date, 0, 21);
+        grid.add(date, 0, 18);
         DatePicker datePick = new DatePicker();
         VBox dateBox = new VBox(datePick);
-        grid.add(dateBox, 0, 22);
+        grid.add(dateBox, 0, 19);
 
         Slider slider = new Slider(0, 100, 50);
-        grid.add(slider, 0, 23);
-        Label volume = new Label("Volume:");
-        grid.add(volume, 0, 24);
+        grid.add(slider, 0, 20);
+        Label volume = new Label();
+        grid.add(volume, 0, 21);
 
         Button valueButton = new Button("Check values");
         VBox button = new VBox(valueButton);
-        grid.add(button, 0, 25);
+        grid.add(button, 0, 22);
 
-        TextArea textArea = new TextArea("Item");
+        TextArea textArea = new TextArea();
         VBox text = new VBox(textArea);
-        grid.add(text, 0, 26, 15, 5);
+        grid.add(text, 0, 23);
 
-        final Text actiontarget = new Text();
-        grid.add(actiontarget, 1, 27);
+        Button exitButton = new Button("Exit");
+        VBox button2 = new VBox(exitButton);
+        grid.add(button2, 0, 24);
 
+        exitButton.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent e) {
+
+               stage.close();
+            }
+        });
+
+        slider.valueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> obs, Number oldVal, Number newVal) {
+                volume.setText("Volume: " + newVal.intValue());
+            }
+        });
+
+        valueButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                String name = userTextField.getText();
+
+                String selection = "Not selected";
+                if(choice1.isSelected()){
+                    selection = "Choice-1";
+                }else if(choice2.isSelected()){
+                    selection = "Choice-2";
+                }
+
+                boolean option1 = optionA.isSelected();
+                boolean option2 = optionB.isSelected();
+
+                String feature = options.getValue();
+
+                String item = features.getSelectionModel().getSelectedItem();
+
+                String date;
+                if(datePick.getValue() != null){
+                    date = datePick.getValue().toString();
+                }else {
+                    date = "Not selected";
+                }
+
+                String msg = "Hi, " + name + "!\n" +
+                        "Choice : " + selection + "\n" +
+                        "Selection1 : " + option1 + "\n" +
+                        "Selection2 : " + option2 + "\n" +
+                        "Feature : " + feature + "\n" +
+                        "Item :" + item + "\n" +
+                        "Date : " + date;
+
+                textArea.setText(msg);
+            }
+        });
 
         Scene scene = new Scene(grid, 700, 600);
         stage.setScene(scene);
         stage.show();
     }
-
-
-
 }
